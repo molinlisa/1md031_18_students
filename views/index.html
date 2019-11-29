@@ -1,9 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>DELI-VERY</title>
-    </head>
-    <body>
-        <h1>Hello World!!!</h1>
-    </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" type="text/css" href="css\style.css">
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="/vue/vue.js" defer></script>
+  <script type="text/javascript" src="js/menu.js"></script>
+  <script src="js/vue_script.js" defer></script>
+
+  <!-- <script src="js/js_script.js"></script>
+  <script src="js/deli-very.js" defer></script> -->
+
+  <link rel="stylesheet" href="css/deli-very.css">
+
+  <link href="https://fonts.googleapis.com/css?family=B612&display=swap" rel="stylesheet">
+  <title>Crafty Burgers</title>
+
+</head>
+
+<body>
+  <main id="vueID">
+
+    <header>
+      <img src="https://d1ol2bl3a4a1ax.cloudfront.net/golf_holidays/1516324062_/godesto-iten-1516324062.jpg">
+      <h1>Welcome to Crafty Burgers</h1>
+    </header>
+
+    <section id="burgersection">
+
+    <h2 align="center">Our Selection</h2>
+
+    <ul class="gridWrapper box">
+      <div v-for="item in menu">
+        <b align="center"> {{ item.productname }} </b>
+        <img v-bind:src="item.img">
+        <p><span>Add to order: <input type="checkbox" v-model="checkBoxList":value="item.productname"></input></span></p>
+        <dl>
+          <dd>{{ item.kCalories }}</dd>
+          <dd>{{ item.extra }}</dd>
+          <dd><span v-if = "item.vegan">Vegan</span></dd>
+          <dt class="allergies">Allergies:</dt>
+          <dd><span v-if = "item.lactos">Lactos</span></dd>
+          <dd><span v-if = "item.gluten">Gluten</span></dd>
+          <dd><span v-if = "item.soy">Soy</span></dd>
+        </dl>
+      </div>
+    </ul>
+
+    </section>
+
+    <!-- <section id="burgersection">
+    <h4>Select burger</h4>
+    <p>This is where you execute burger selection</p>
+
+    <div class="gridWrapper">
+    <div class="box">
+    <h3>Vegan Delight</h3>
+    <img src="https://i.pinimg.com/564x/2b/fe/f0/2bfef0a9bd5496f203e8291a19ac3587.jpg" width="300">
+    <ul>
+    <li>275k Calories</li>
+    <li>Vegan</li>
+    <li>Contains <span class="allergies">soy</span></li>
+  </ul>
+</div>
+
+<div class="box">
+<h3>Green Supreme</h3>
+<img src="https://i.pinimg.com/564x/0d/6d/a8/0d6da8c391219fc28be87a312962321b.jpg" width="300">
+<ul>
+<li>290k Calories</li>
+<li>Vegan</li>
+<li>Contains <span class="allergies">gluten</span></li>
+</ul>
+</div>
+
+<div class="box">
+<h3>Hipster Madness</h3>
+<img src="https://i.pinimg.com/564x/1c/a9/42/1ca9426fd18c0c2571b9413b774f3393.jpg" width="300">
+<ul>
+<li>350k Calories</li>
+<li>Contains <span class="allergies">lactos</span></li>
+<li>Contains <span class="allergies">gluten</span></li>
+</ul>
+</div>
+</section>
+-->
+
+<section id="ordersection">
+  <h4>Customer information</h4>
+  <p>
+    <label for="fullname">Full name</label><br>
+    <input v-model="orderObject.Fullname" type="text" id="fullname" name="fn" required="required" placeholder="First and Last name">
+  </p>
+
+  <p>
+    <label for="email">E-mail</label><br>
+    <input v-model="orderObject.Email" type="text" id="email" name="em" required="required" placeholder="E-mail address">
+  </p>
+
+  <!--
+  <p>
+  <label for="streetname">Street</label><br>
+  <input v-model="orderObject.Streetname" type="text" id="streetname" name="sn" placeholder="Street name">
+</p>
+
+<p>
+<label for="house">House</label><br>
+<input v-model="orderObject.Housenumber" type="text" id="housenumber" name="hn" placeholder="House number">
+</p>
+-->
+
+<p>
+  <label for="payment">Payment options</label><br>
+  <select v-model="orderObject.Payment" id="payment" name="payopt">
+    <option>Credit card</option>
+    <option>Swish</option>
+    <option>Klarna Invoice</option>
+    <option>Natura</option>
+  </select>
+</p>
+
+<!--
+<p>
+<label for="gender">Gender</label><br>
+<input type="radio" id="female" name="genbutton" required="required" placeholder="Female">
+<label for="female">Female</label><br>
+
+<input type="radio" id="male" name="genbutton" required="required" placeholder="Male">
+<label for="male">Male</label><br>
+
+<input type="radio" id="nonbin" name="genbutton" placeholder="Non binary">
+<label for="nonbin">Non-binary</label><br>
+
+<input type="radio" id="nongen" name="genbutton" placeholder="Do not wish to tell">
+<label for="nongen">Do not wish to tell</label><br>
+</p>
+-->
+
+<!-- addOrder message
+<div id="dots" v-on:click="addOrder">
+...
+</div>
+-->
+
+    <!-- Choose position on the map by clicking on it -->
+    <h1> Click in the map! </h1>
+    <a href="/dispatcher" target="_blank">Open dispatcher in new window</a>.
+    <div class="view-box">
+      <div id="dots" v-on:click="displayOrder">
+        <div v-bind:style="{ left: displayPosition.x + 'px', top: displayPosition.y + 'px'}">
+          T
+        </div>
+      </div>
+    </div>
+
+    <!-- If "Submit order!" button clicked -->
+    <div v-if = "placeOrder">
+      <span>Your Order: <span v-for = "value in checkBoxList"> {{ value }}</span></span>
+      <p>
+        <dd v-for = "(value,key) in orderObject">{{ key }}: {{ value }}</dd>
+        <p>
+        </div>
+
+  </section>
+
+  <button v-on:click="addOrder"><img src="https://cdn2.vectorstock.com/i/1000x1000/07/16/burger-soda-drink-glass-with-straw-icon-set-heart-vector-25810716.jpg" width="30"> Submit order!</button>
+
+</main>
+
+<hr>
+<footer> Copyright </footer>
+</body>
 </html>

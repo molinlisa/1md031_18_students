@@ -1,0 +1,116 @@
+/* Your comment goes here */
+
+/*
+@import url("reset.css");
+@import url("https://fonts.googleapis.com/css?family=Tangerine");
+*/
+
+@media screen and (max-width: 800px) {
+    body {
+        font-size: 6px;
+        /*
+        margin: 0;
+        padding: 0;
+        */
+    }
+}
+
+input[type="radio"], input[type="checkbox"] {
+  height: 30px;
+  width: 30px;
+}
+
+header {
+	height: 400px;
+	overflow: hidden;
+}
+
+header h1 {
+	margin: 10px;
+	position: absolute;
+	padding: 60px;
+	top: 70px;
+	left: 300px;
+	text-align: center;
+}
+
+header img {
+	margin: 10px;
+	position: relative;
+	width: 100%;
+	height: auto;
+	opacity: 0.6;
+}
+
+body {
+    font-family: "B612";
+		font-size: 14pt;
+    /* font-size: 12pt;*/
+}
+
+.gridWrapper {
+     display: grid;
+     margin: 10px;
+     grid-gap: 10px;
+		 grid-template-columns: repeat(auto-fill,20em);
+     /*background-color: #fff;
+     color: #444;
+     box-align: center; */
+ }
+
+ .box {
+		border-radius: 5px;
+		padding: 1px;
+		text-align: center;
+}
+
+.box img {
+  display: block;
+  width: 14em;
+  margin: auto;
+}
+table {
+  width: 100%;
+	text-align: center;
+}
+
+button {
+	margin: 10px;
+}
+
+button:hover {
+    background-color: yellow;
+		cursor: grab;
+}
+
+.allergies {
+    color: #ff5500; /* red */
+    font-weight: bold;
+}
+
+#burgersection {
+    background-color: #FFD700;  /* yellow */
+		border: 2px dashed #000000;
+		margin: 20px;
+		padding: 10px;
+}
+
+#ordersection {
+    background-color: #F0FFFF;   /* light blue */
+		border: 2px dashed #000000;
+		margin: 20px;
+		padding: 10px;
+
+}
+
+/*
+a, strong, em {
+    color: #0099ff;
+}
+
+p.info,
+#login p {
+    width: 80%;
+    margin: 1vw auto;
+}
+*/
